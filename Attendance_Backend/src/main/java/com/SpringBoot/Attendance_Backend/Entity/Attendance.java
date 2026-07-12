@@ -3,13 +3,14 @@ package com.SpringBoot.Attendance_Backend.Entity;
 import com.SpringBoot.Attendance_Backend.Enums.AttendanceStatus;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 
 @Entity
 public class Attendance {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long AttendanceId;
-    @NotBlank
+    @NotNull
     @Enumerated(EnumType.STRING)
     private AttendanceStatus attendanceStatus;
 

@@ -1,8 +1,10 @@
 package com.SpringBoot.Attendance_Backend.Entity;
 import com.SpringBoot.Attendance_Backend.Enums.Category;
 import com.SpringBoot.Attendance_Backend.Enums.Role;
+import jakarta.annotation.Nullable;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "Member")
@@ -11,16 +13,17 @@ public class Member {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long MemberId;
     @NotBlank
-    private String MemberName;
-    @NotBlank
+    @Column(name = "MemberName")
+    private String name;
+    @NotNull
     @Enumerated(EnumType.STRING)
     private Category category;
-    @NotBlank
+    @NotNull
     @Enumerated(EnumType.STRING)
     private Role role;
-    @NotBlank
+    @Nullable
     private String email;
-    @NotBlank
+    @Nullable
     private String Phone;
 
     public Long getMemberId() {
@@ -31,12 +34,12 @@ public class Member {
         MemberId = memberId;
     }
 
-    public String getMemberName() {
-        return MemberName;
+    public String getName() {
+        return name;
     }
 
-    public void setMemberName(String memberName) {
-        MemberName = memberName;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public Category getCategory() {

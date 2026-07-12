@@ -29,7 +29,7 @@ public class MemberService {
     public void UpdateMember(Long id, Member Updatedmember) {
         Member member=memberRepository.findById(id).orElse(null);
         if(member!=null){
-            member.setMemberName(Updatedmember.getMemberName());
+            member.setName(Updatedmember.getName());
             member.setCategory(Updatedmember.getCategory());
             member.setEmail(Updatedmember.getEmail());
             member.setRole(Updatedmember.getRole());

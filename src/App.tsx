@@ -39,7 +39,7 @@ function App() {
 
   useEffect(() => {
     // Uncomment to load from real server
-    // loadMembers()
+    loadMembers()
   }, [])
 
   const loadMembers = async () => {
@@ -71,25 +71,22 @@ function App() {
     setEditingMember(null)
   }
 
-  const handleAddMember = (newMember: Omit<Member, 'id' | 'createdAt'>) => {
-    const member: Member = {
-      ...newMember,
-      id: Math.max(...members.map(m => m.id), 0) + 1,
-      createdAt: new Date().toISOString()
-    }
-    setMembers([member , ...members])
-    handleCloseModal()
-  }
+  const handleAddMember = async (newMember: Omit<Member, 'id' | 'createdAt'>) => {
+  const created = await memberService.addMember(newMember)
+  setMembers([created, ...members])
+  handleCloseModal()
+}
 
-  const handleUpdateMember = (updatedMember: Member) => {
-    setMembers(members.map(m => m.id === updatedMember.id ? updatedMember : m))
-    handleCloseModal()
-  }
+  const handleUpdateMember = async (updatedMember: Member) => {
+  const updated = await memberService.updateMember(updatedMember.id, updatedMember)
+  setMembers(members.map(m => m.id === updated.id ? updated : m))
+  handleCloseModal()
+}
 
-  const handleDeleteMember = (id: number) => {
+  const handleDeleteMember = async(id: number) => {
     if (confirm('Are you sure you want to delete this member?')) {
+      await memberService.deleteMember(id)
       setMembers(members.filter(m => m.id !== id))
-      // Also remove attendance records for this member
       setAttendance(attendance.filter(a => a.memberId !== id))
     }
   }
