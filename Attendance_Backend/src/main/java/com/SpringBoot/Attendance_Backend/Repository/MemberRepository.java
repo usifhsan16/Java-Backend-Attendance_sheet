@@ -8,5 +8,5 @@ import java.util.List;
 
 @Repository
 public interface MemberRepository extends JpaRepository<Member,Long> {
-    public List<Member> fistbycategory(String Category);
+    public List<Member> findByCategory(String Category);
 }
