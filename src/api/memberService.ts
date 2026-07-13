@@ -1,5 +1,5 @@
 import axios from 'axios';
-import type { Member, Attendance, Category, AttendanceStatus } from '../types';
+import type { Member, Attendance, Category, AttendanceStatus, Session } from '../types';
 
 const API_BASE = 'http://localhost:3001/api';
 
@@ -37,10 +37,21 @@ export const memberService = {
     await api.delete(`/members/${id}`);
   },
 
+  // Create a new session
+  createSession: async (name?: string, date?: string): Promise<Session> => {
+    const response = await api.post('/sessions', {
+      name: name ?? `Session ${new Date().toLocaleDateString()}`,
+      date: date ?? new Date().toISOString(),
+      createdAt: new Date().toISOString(),
+    });
+    return response.data;
+  },
+
   // Mark attendance
-  markAttendance: async (memberId: number, status: AttendanceStatus, notes?: string): Promise<Attendance> => {
+  markAttendance: async (memberId: number, status: AttendanceStatus, notes?: string, sessionId?: number): Promise<Attendance> => {
     const response = await api.post('/attendance', {
       memberId,
+      sessionId,
       status,
       notes,
       date: new Date().toISOString().split('T')[0],

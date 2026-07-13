@@ -91,39 +91,45 @@ function App() {
     }
   }
 
-  const handleAddSession = () => {
-    const newSession: Session = {
-      id: Math.max(...sessions.map(s => s.id), 0) + 1,
-      name: `Session ${Math.max(...sessions.map(s => s.id), 0) + 1}`,
-      date: new Date().toISOString(),
-      createdAt: new Date().toISOString(),
+  const handleAddSession = async () => {
+    try {
+      setLoading(true)
+      setError('')
+      const newSession = await memberService.createSession()
+      setSessions(prev => [...prev, newSession])
+      setSelectedSession(newSession.id)
+    } catch (err) {
+      setError('Failed to create session. Please try again.')
+      console.error(err)
+    } finally {
+      setLoading(false)
     }
-    setSessions([...sessions, newSession])
-    setSelectedSession(newSession.id)
   }
 
-  const handleMarkAttendance = (memberId: number, status: 'present' | 'absent') => {
-    // Check if attendance record already exists for this member in this session
-    const existingRecord = attendance.find(
-      a => a.memberId === memberId && a.sessionId === selectedSession
-    )
+  const handleMarkAttendance = async (memberId: number, status: 'present' | 'absent') => {
+    try {
+      setLoading(true)
+      setError('')
+      const newAttendance = await memberService.markAttendance(memberId, status, undefined, selectedSession)
 
-    if (existingRecord) {
-      // Update existing record
-      setAttendance(
-        attendance.map(a =>
-          a.id === existingRecord.id ? { ...a, status } : a
+      setAttendance(prev => {
+        const existingRecord = prev.find(
+          record => record.memberId === memberId && record.sessionId === selectedSession
         )
-      )
-    } else {
-      // Create new attendance record
-      const newAttendance: Attendance = {
-        id: Math.max(...attendance.map(a => a.id), 0) + 1,
-        memberId,
-        sessionId: selectedSession,
-        status,
-      }
-      setAttendance([...attendance, newAttendance])
+
+        if (existingRecord) {
+          return prev.map(record =>
+            record.id === existingRecord.id ? { ...record, status: newAttendance.status } : record
+          )
+        }
+
+        return [...prev, newAttendance]
+      })
+    } catch (err) {
+      setError('Failed to mark attendance. Please try again.')
+      console.error(err)
+    } finally {
+      setLoading(false)
     }
   }
 
@@ -232,7 +238,7 @@ function App() {
                       : 'bg-indigo-600 text-white hover:bg-indigo-700'
                   }`}
                 >
-                  + New Session
+                  Create Session
                 </button>
               </div>
             </div>
