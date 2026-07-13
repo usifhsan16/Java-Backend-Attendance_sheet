@@ -1,6 +1,7 @@
 package com.SpringBoot.Attendance_Backend.Entity;
 import com.SpringBoot.Attendance_Backend.Enums.Category;
 import com.SpringBoot.Attendance_Backend.Enums.Role;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.annotation.Nullable;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
@@ -26,10 +27,12 @@ public class Member {
     @Nullable
     private String Phone;
 
+    @JsonProperty("id")
     public Long getMemberId() {
         return MemberId;
     }
 
+    @JsonProperty("id")
     public void setMemberId(Long memberId) {
         MemberId = memberId;
     }

@@ -29,15 +29,15 @@ public class MemberController {
     }
 
     @PostMapping("/members")
-    public ResponseEntity<Void> CreateMember(@Valid @RequestBody Member member){
-        memberService.CreateMember(member);
-        return ResponseEntity.noContent().build();
+    public ResponseEntity<Member> CreateMember(@Valid @RequestBody Member member){
+        Member created=memberService.CreateMember(member);
+        return ResponseEntity.ok(created);
     }
 
     @PutMapping("/members/{id}")
-    public ResponseEntity<Void> UpdateMember(@PathVariable Long id,@RequestBody Member member){
-        memberService.UpdateMember(id,member);
-        return ResponseEntity.noContent().build();
+    public ResponseEntity<Member> UpdateMember(@PathVariable Long id,@RequestBody Member member){
+       Member created= memberService.UpdateMember(id,member);
+        return ResponseEntity.ok(created);
     }
 
     @DeleteMapping("/members/{id}")

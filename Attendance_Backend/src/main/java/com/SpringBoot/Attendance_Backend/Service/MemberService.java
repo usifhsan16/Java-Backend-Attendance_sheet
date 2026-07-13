@@ -26,15 +26,16 @@ public class MemberService {
         return memberRepository.save(member);
     }
 
-    public void UpdateMember(Long id, Member Updatedmember) {
+    public Member UpdateMember(Long id, Member Updatedmember) {
         Member member=memberRepository.findById(id).orElse(null);
         if(member!=null){
             member.setName(Updatedmember.getName());
             member.setCategory(Updatedmember.getCategory());
             member.setEmail(Updatedmember.getEmail());
             member.setRole(Updatedmember.getRole());
-            memberRepository.save(member);
+            return memberRepository.save(member);
         }
+        return null;
     }
 
     public void DeleteMember(Long id){
