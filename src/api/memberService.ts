@@ -14,6 +14,12 @@ export const memberService = {
     return response.data;
   },
 
+  // Get all sessions
+  getSessions: async (): Promise<Session[]> => {
+    const response = await api.get('/sessions');
+    return response.data;
+  },
+
   // Get members by category
   getMembersByCategory: async (category: Category): Promise<Member[]> => {
     const response = await api.get(`/members/category/${category}`);

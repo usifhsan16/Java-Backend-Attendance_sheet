@@ -1,19 +1,38 @@
 package com.SpringBoot.Attendance_Backend.Entity;
 
 import com.SpringBoot.Attendance_Backend.Enums.AttendanceStatus;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+
+import java.time.LocalDate;
 
 @Entity
 public class Attendance {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long AttendanceId;
+
     @NotNull
     @Enumerated(EnumType.STRING)
     private AttendanceStatus attendanceStatus;
 
+    private String notes;
+
+    private LocalDate date;
+
+    @ManyToOne
+    @JoinColumn(name = "member_id")
+    @JsonIgnore
+    private Member member;
+
+    @ManyToOne
+    @JoinColumn(name = "session_id")
+    @JsonIgnore
+    private Session session;
+
+    @JsonProperty("id")
     public Long getAttendanceId() {
         return AttendanceId;
     }
@@ -22,12 +41,30 @@ public class Attendance {
         AttendanceId = attendanceId;
     }
 
+    @JsonProperty("status")
     public AttendanceStatus getAttendanceStatus() {
         return attendanceStatus;
     }
 
+    @JsonProperty("status")
     public void setAttendanceStatus(AttendanceStatus attendanceStatus) {
         this.attendanceStatus = attendanceStatus;
+    }
+
+    public String getNotes() {
+        return notes;
+    }
+
+    public void setNotes(String notes) {
+        this.notes = notes;
+    }
+
+    public LocalDate getDate() {
+        return date;
+    }
+
+    public void setDate(LocalDate date) {
+        this.date = date;
     }
 
     public Member getMember() {
@@ -46,10 +83,14 @@ public class Attendance {
         this.session = session;
     }
 
-    @OneToOne
-    @JoinColumn(name = "Member Id")
-    private Member member;
-    @OneToOne
-    @JoinColumn(name = "Session Id")
-    private Session session;
+    // These are what actually get serialized to JSON as "memberId" / "sessionId"
+    @JsonProperty("memberId")
+    public Long getMemberId() {
+        return member != null ? member.getMemberId() : null;
+    }
+
+    @JsonProperty("sessionId")
+    public Long getSessionId() {
+        return session != null ? session.getSessionId() : null;
+    }
 }

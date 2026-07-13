@@ -40,6 +40,7 @@ function App() {
   useEffect(() => {
     // Uncomment to load from real server
     loadMembers()
+    loadSessions()
   }, [])
 
   const loadMembers = async () => {
@@ -50,6 +51,20 @@ function App() {
       setMembers(data)
     } catch (err) {
       setError('Failed to load members. Make sure the server is running.')
+      console.error(err)
+    } finally {
+      setLoading(false)
+    }
+  }
+
+  const loadSessions = async () => {
+    try {
+      setLoading(true)
+      setError('')
+      const data = await memberService.getSessions()
+      setSessions(data)
+    } catch (err) {
+      setError('Failed to load sessions. Make sure the server is running.')
       console.error(err)
     } finally {
       setLoading(false)
