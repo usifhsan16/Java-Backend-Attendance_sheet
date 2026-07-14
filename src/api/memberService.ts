@@ -45,13 +45,13 @@ export const memberService = {
 
   // Create a new session
   createSession: async (name?: string, date?: string): Promise<Session> => {
-    const response = await api.post('/sessions', {
-      name: name ?? `Session ${new Date().toLocaleDateString()}`,
-      date: date ?? new Date().toISOString(),
-      createdAt: new Date().toISOString(),
-    });
-    return response.data;
-  },
+  const response = await api.post('/sessions', {
+    name: name ?? `Session ${new Date().toLocaleDateString()}`,
+    date: date ?? new Date().toISOString().split('T')[0],   // ← was just .toISOString()
+    createdAt: new Date().toISOString(),
+  });
+  return response.data;
+},
 
   // Mark attendance
   markAttendance: async (memberId: number, status: AttendanceStatus, notes?: string, sessionId?: number): Promise<Attendance> => {

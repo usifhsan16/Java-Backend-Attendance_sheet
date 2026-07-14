@@ -43,6 +43,14 @@ function App() {
     loadSessions()
   }, [])
 
+  useEffect(() => {
+    const sessionExists = sessions.some(session => session.id === selectedSession)
+
+    if (!sessionExists && sessions.length > 0) {
+      setSelectedSession(sessions[sessions.length - 1].id)
+    }
+  }, [sessions, selectedSession])
+
   const loadMembers = async () => {
     try {
       setLoading(true)
