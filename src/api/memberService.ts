@@ -48,7 +48,6 @@ export const memberService = {
   const response = await api.post('/sessions', {
     name: name ?? `Session ${new Date().toLocaleDateString()}`,
     date: date ?? new Date().toISOString().split('T')[0],   // ← was just .toISOString()
-    createdAt: new Date().toISOString(),
   });
   return response.data;
 },
@@ -60,7 +59,6 @@ export const memberService = {
       sessionId,
       status,
       notes,
-      date: new Date().toISOString().split('T')[0],
     });
     return response.data;
   },

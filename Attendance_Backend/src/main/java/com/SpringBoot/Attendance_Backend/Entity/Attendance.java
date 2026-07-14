@@ -20,8 +20,6 @@ public class Attendance {
 
     private String notes;
 
-    private LocalDate date;
-
     @ManyToOne
     @JoinColumn(name = "member_id")
     @JsonIgnore
@@ -57,14 +55,6 @@ public class Attendance {
 
     public void setNotes(String notes) {
         this.notes = notes;
-    }
-
-    public LocalDate getDate() {
-        return date;
-    }
-
-    public void setDate(LocalDate date) {
-        this.date = date;
     }
 
     public Member getMember() {
