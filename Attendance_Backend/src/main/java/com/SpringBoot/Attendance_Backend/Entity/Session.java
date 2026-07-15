@@ -12,22 +12,21 @@ import java.time.LocalDate;
 public class Session {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long SessionId;
+    private Long sessionId;   // was: SessionId
 
+    @JsonProperty("id")
+    public Long getSessionId() {
+        return sessionId;
+    }
+
+    public void setSessionId(Long sessionId) {
+        this.sessionId = sessionId;
+    }
     @NotBlank
     private String Title;
 
     @NotNull
     private LocalDate SessionDate;
-
-    @JsonProperty("id")
-    public Long getSessionId() {
-        return SessionId;
-    }
-
-    public void setSessionId(Long sessionId) {
-        SessionId = sessionId;
-    }
 
     @JsonProperty("name")
     public String getTitle() {

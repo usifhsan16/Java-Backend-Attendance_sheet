@@ -12,7 +12,17 @@ import jakarta.validation.constraints.NotNull;
 public class Member {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long MemberId;
+    private Long memberId;   // was: MemberId
+
+    @JsonProperty("id")
+    public Long getMemberId() {
+        return memberId;      // update reference
+    }
+
+    @JsonProperty("id")
+    public void setMemberId(Long memberId) {
+        this.memberId = memberId;   // update reference
+    }
     @NotBlank
     @Column(name = "MemberName")
     private String name;
@@ -26,16 +36,6 @@ public class Member {
     private String email;
     @Nullable
     private String Phone;
-
-    @JsonProperty("id")
-    public Long getMemberId() {
-        return MemberId;
-    }
-
-    @JsonProperty("id")
-    public void setMemberId(Long memberId) {
-        MemberId = memberId;
-    }
 
     public String getName() {
         return name;
