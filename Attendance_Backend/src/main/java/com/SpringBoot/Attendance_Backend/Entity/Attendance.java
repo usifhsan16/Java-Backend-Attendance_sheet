@@ -79,8 +79,26 @@ public class Attendance {
         return member != null ? member.getMemberId() : null;
     }
 
+    @JsonProperty("memberId")
+    public void setMemberId(Long memberId) {
+        if (memberId != null) {
+            Member m = new Member();
+            m.setMemberId(memberId);
+            this.member = m;
+        }
+    }
+
     @JsonProperty("sessionId")
     public Long getSessionId() {
         return session != null ? session.getSessionId() : null;
+    }
+
+    @JsonProperty("sessionId")
+    public void setSessionId(Long sessionId) {
+        if (sessionId != null) {
+            Session s = new Session();
+            s.setSessionId(sessionId);
+            this.session = s;
+        }
     }
 }
