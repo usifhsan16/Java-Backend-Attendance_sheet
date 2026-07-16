@@ -41,6 +41,7 @@ function App() {
     // Uncomment to load from real server
     loadMembers()
     loadSessions()
+    loadAttendance()
   }, [])
 
   useEffect(() => {
@@ -50,6 +51,8 @@ function App() {
       setSelectedSession(sessions[sessions.length - 1].id)
     }
   }, [sessions, selectedSession])
+
+  
 
   const loadMembers = async () => {
     try {
@@ -76,6 +79,16 @@ function App() {
       console.error(err)
     } finally {
       setLoading(false)
+    }
+  }
+
+  const loadAttendance = async () => {
+    try {
+      const data = await memberService.getAllAttendance()
+      setAttendance(data)
+    } catch (err) {
+      setError('Failed to load attendance.')
+      console.error(err)
     }
   }
 

@@ -14,4 +14,6 @@ public interface AttendanceRepository extends JpaRepository<Attendance,Long> {
     Optional<Attendance> findByMember_MemberIdAndSession_SessionId(Long memberId, Long sessionId);
 
     List<Attendance> findByMember_MemberId(Long memberId);
+
+    List<Attendance> findBySession_SessionId(Long sessionId);
 }

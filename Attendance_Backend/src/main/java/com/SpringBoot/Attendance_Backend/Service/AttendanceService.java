@@ -45,4 +45,12 @@ public class AttendanceService {
     public List<Attendance> GetAttendanceForMember(Long memberId) {
         return attendanceRepository.findByMember_MemberId(memberId);
     }
+
+    public List<Attendance> GetMembersSessions(Long SessionId){
+        return attendanceRepository.findBySession_SessionId(SessionId);
+    }
+
+    public List<Attendance> GetAllAttendance() {
+        return attendanceRepository.findAll();
+    }
 }

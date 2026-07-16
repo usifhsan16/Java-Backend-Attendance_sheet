@@ -74,4 +74,14 @@ export const memberService = {
     const response = await api.get('/attendance/today');
     return response.data;
   },
+
+  getSessionAttendance: async (sessionId: number): Promise<Attendance[]> => {
+    const response = await api.get(`/attendance/session/${sessionId}`);
+    return response.data;
+},
+
+getAllAttendance: async (): Promise<Attendance[]> => {
+    const response = await api.get('/attendance');
+    return response.data;
+},
 };

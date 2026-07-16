@@ -25,7 +25,19 @@ public class AttendanceController {
 
     @GetMapping("/attendance/member/{memberId}")
     public ResponseEntity<List<Attendance>> GetAttendanceforMember(@PathVariable Long memberId){
-        List AttendanceofMember=attendanceService.GetAttendanceForMember(memberId);
+        List<Attendance> AttendanceofMember=attendanceService.GetAttendanceForMember(memberId);
         return ResponseEntity.ok(AttendanceofMember);
+    }
+
+    @GetMapping("/attendance/session/{sessionId}")
+    public ResponseEntity<List<Attendance>> GetMembersSessions(@PathVariable Long sessionId){
+        List<Attendance> AttendanceBySession=attendanceService.GetMembersSessions(sessionId);
+        return ResponseEntity.ok(AttendanceBySession);
+    }
+
+    @GetMapping("/attendance")
+    public ResponseEntity<List<Attendance>> GetAllAttendance(){
+        List<Attendance> AllAttendance=attendanceService.GetAllAttendance();
+        return ResponseEntity.ok(AllAttendance);
     }
 }
