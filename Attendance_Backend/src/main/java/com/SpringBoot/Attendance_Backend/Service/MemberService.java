@@ -1,6 +1,7 @@
 package com.SpringBoot.Attendance_Backend.Service;
 
 import com.SpringBoot.Attendance_Backend.Entity.Member;
+import com.SpringBoot.Attendance_Backend.Repository.AttendanceRepository;
 import com.SpringBoot.Attendance_Backend.Repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -13,6 +14,8 @@ import java.util.List;
 @RequiredArgsConstructor
 public class MemberService {
     private final MemberRepository memberRepository;
+
+    private final AttendanceRepository attendanceRepository;
 
     public List<Member> GetAllMembers(){
         return memberRepository.findAll();
@@ -41,6 +44,7 @@ public class MemberService {
     public void DeleteMember(Long id){
         Member member=memberRepository.findById(id).orElse(null);
         if (member!=null){
+            attendanceRepository.deleteByMemberMemberId(member.getMemberId());
             memberRepository.delete(member);
         }
     }

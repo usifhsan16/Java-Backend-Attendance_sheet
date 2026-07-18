@@ -1,6 +1,7 @@
 package com.SpringBoot.Attendance_Backend.Repository;
 
 import com.SpringBoot.Attendance_Backend.Entity.Attendance;
+import jakarta.transaction.Transactional;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
@@ -16,4 +17,7 @@ public interface AttendanceRepository extends JpaRepository<Attendance,Long> {
     List<Attendance> findByMember_MemberId(Long memberId);
 
     List<Attendance> findBySession_SessionId(Long sessionId);
+
+    @Transactional
+    void deleteByMemberMemberId(Long memberId);
 }
